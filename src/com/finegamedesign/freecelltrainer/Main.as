@@ -92,7 +92,6 @@ package com.finegamedesign.freecelltrainer
             addEventListener(Event.ENTER_FRAME, update, false, 0, true);
             level_txt.addEventListener(MouseEvent.CLICK, cheatLevel, false, 0, true);
             restartTrial_btn.addEventListener(MouseEvent.CLICK, restartTrial, false, 0, true);
-            feedback.txt.text = "";
             feedback.mouseEnabled = false;
             feedback.mouseChildren = false;
             feedback.txt.mouseEnabled = false;
@@ -120,8 +119,6 @@ package com.finegamedesign.freecelltrainer
             if (!inTrial) {
                 inTrial = true;
                 mouseChildren = true;
-                model.round = 0;
-                model.roundMax = 0;
                 model.populate(Model.levels[level - 1]);
                 view.populate(model, room, this);
             }
@@ -197,9 +194,6 @@ package com.finegamedesign.freecelltrainer
         private function lose():void
         {
             inTrial = false;
-            if (3 <= model.level) {
-                model.level = Math.max(2, model.level - 1);
-            }
             FlxKongregate.api.stats.submit("Score", model.score);
             mouseChildren = false;
             feedback.gotoAndPlay("wrong");
@@ -211,7 +205,6 @@ package com.finegamedesign.freecelltrainer
         {
             if (!inTrial) {
                 view.clear();
-                feedback.txt.text = "";
                 feedback.gotoAndPlay("none");
                 mouseChildren = true;
                 if (currentFrame < totalFrames) {

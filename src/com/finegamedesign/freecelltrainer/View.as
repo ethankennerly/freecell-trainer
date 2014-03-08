@@ -1,5 +1,6 @@
 package com.finegamedesign.freecelltrainer
 {
+    import flash.display.DisplayObject;
     import flash.display.DisplayObjectContainer;
     import flash.display.MovieClip;
     import flash.events.MouseEvent;
@@ -32,25 +33,38 @@ package com.finegamedesign.freecelltrainer
             this.model = model;
             this.room = room;
             this.ui = ui;
+            populateCards(model.foundations, room, "foundation");
+            populateCards(model.cells, room, "cell");
+            populateCards(model.columns, room, "column");
+            ui.feedback.txt.text = model.help;
             room.addEventListener(MouseEvent.MOUSE_DOWN, mouseDown, false, 0, true);
         }
 
-        private function position(mc:MovieClip, i:int, columnCount:int, rowCount:int):void
+        private function populateCards(foundations:Array,
+                room:DisplayObjectContainer, prefix:String):void
         {
-            mc.x = positionX(i, columnCount);
-            mc.y = positionY(i, columnCount, rowCount);
+            var cardPrefix:String = "card";
+            for (var f:int = 0; f < foundations.length; f++) {
+                var foundation:DisplayObjectContainer = room[prefix + "_" + f];
+                for (var c:int = 0; c < foundations[f].length; c++) {
+                    var card:Card = foundation[cardPrefix + "_" + c];
+                    card.txt.text = foundations[f][c].toString();
+                    card.gotoAndStop("enable");
+                }
+                show(foundation, cardPrefix, c);
+            }
+            show(room, prefix, f);
         }
 
-        private function positionX(i:int, columnCount:int):Number
+        private function show(room:DisplayObjectContainer, prefix:String, index:int):void
         {
-            var column:int = i % columnCount;
-            return tileWidth * (0.5 + column - columnCount * 0.5);
-        }
-
-        private function positionY(i:int, columnCount:int, rowCount:int):Number
-        {
-            var row:int = i / columnCount;
-            return tileWidth * (0.5 + row - rowCount * 0.5);
+            for (var c:int = 0; c < room.numChildren; c++) {
+                var child:DisplayObject = room.getChildAt(c);
+                if (0 == child.name.indexOf(prefix)) {
+                    var n:int = parseInt(child.name.split("_")[1]);
+                    child.visible = n < index;
+                }
+            }
         }
 
         private function mouseDown(event:MouseEvent):void

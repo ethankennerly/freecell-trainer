@@ -5,17 +5,17 @@ package com.finegamedesign.freecelltrainer
         internal static const EMPTY:int = 0;
         internal static var levels:Array = [
             {foundations: [[0]], 
-             cells: [0], 
-             tableau: [[1, 2]], 
+             cells: [[0]], 
+             columns: [[1, 2]], 
              help: "You may drag a bottom layer to any empty pan."},
             {foundations: [[0], [100]], 
-             cells: [102], 
-             tableau: [[1, 103], [101, 2]], 
+             cells: [[102]], 
+             columns: [[1, 103], [101, 2]], 
              help: "You may drag a bottom layer to the next smaller layer of the opposite flavor."},
             {backsteps: 5,
              foundations: [[1, 2, 3], [101, 102, 103]], 
-             cells: [0], 
-             tableau: [[], []], 
+             cells: [[0]], 
+             columns: [[], []], 
              help: "Build both two cakes.  You may drag a bottom layer to an empty pan or the next smaller layer of the opposite flavor."},
         ];
 
@@ -26,7 +26,7 @@ package com.finegamedesign.freecelltrainer
         internal var help:String = "";
         internal var level:int = 1;
         internal var levelMax:int = levels.length;
-        internal var tableau:Array = [[]];
+        internal var columns:Array = [[]];
         internal var onContagion:Function;
         internal var onDeselect:Function;
         internal var onDie:Function;
@@ -104,7 +104,7 @@ package com.finegamedesign.freecelltrainer
                     return 0;
                 }
             }
-            for each(var column:Array in tableau) {
+            for each(var column:Array in columns) {
                 for each(var card:int in column) {
                     if (1 <= card) {
                         return 0;
