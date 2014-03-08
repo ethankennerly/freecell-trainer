@@ -4,6 +4,7 @@ package com.finegamedesign.freecelltrainer
     {
         internal static const EMPTY:int = 0;
         internal static const RADIX:int = 100;
+        internal static const COLORS:int = 2;
         internal static var levels:Array = [
             {foundations: [[]], 
              cells: [[]], 
@@ -22,12 +23,17 @@ package com.finegamedesign.freecelltrainer
 
         internal static function suit(card:int):int
         {
-            return card / Model.RADIX;
+            return card / RADIX;
+        }
+
+        internal static function color(card:int):int
+        {
+            return suit(card) % COLORS;
         }
 
         internal static function value(card:int):int
         {
-            return card % Model.RADIX;
+            return card % RADIX;
         }
 
         internal var backsteps:int = 0;
@@ -105,6 +111,58 @@ package com.finegamedesign.freecelltrainer
             return win();
         }
 
+        internal function canMove(name:String, columnIndex:int, index:int):Boolean
+        {
+            return index == this[name + "s"][columnIndex].length - 1 &&
+                from(name, columnIndex, false);
+        }
+
+        /**
+         * @param   push    Hold place at each column this may go to.
+         * @return  last card can move.
+         */
+        internal function from(name:String, columnIndex:int, push:Boolean=true):Boolean
+        {
+            var column:Array = this[name + "s"][columnIndex];
+            var card:int = column[column.length - 1];
+            var canMove:Boolean = false;
+            for (var c:int = 0; c < cells.length; c++) {
+                if (cells[c].length == 0) {
+                    canMove = true;
+                    if (push) {
+                        cells[c].push(EMPTY);
+                    }
+                }
+            }
+            for (c = 0; c < columns.length; c++) {
+                var above:int = columns[c][columns[c].length - 1];
+                if (compatible(card, above)) {
+                    canMove = true;
+                    if (push) {
+                        columns[c].push(EMPTY);
+                    }
+                }
+            }
+            return canMove;
+        }
+
+        internal function cancel():void
+        {
+            popEmpty(cells);
+            popEmpty(columns);
+        }
+
+        private function popEmpty(cells:Array):void
+        {
+            for (var c:int = 0; c < cells.length; c++) {
+                if (1 <= cells[c].length) {
+                    if (EMPTY == cells[c][cells[c].length - 1]) {
+                        cells[c].pop();
+                    }
+                }
+            }
+        }
+
         /**
          * TODO: Lose if no moves remaining.
          * @return  0 continue, 1: win, -1: lose.
@@ -124,6 +182,11 @@ package com.finegamedesign.freecelltrainer
                 }
             }
             return 1;
+        }
+
+        private function compatible(card:int, above:int):Boolean
+        {
+            return color(card) != color(above) && value(card) == value(above) - 1;
         }
     }
 }

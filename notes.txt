@@ -141,6 +141,8 @@ http://www.solitairecity.com/iPhone/FreeCell_Rules.shtml
 Graphics
 Names
 	Wedding Cake Builder
+	Wedding Cake Wizard
+	Wedding Cake Witch
 	Cake Columns
 	Wedding Cake Stand
 	Wedding Cake Tower

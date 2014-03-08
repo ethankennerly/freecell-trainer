@@ -42,7 +42,7 @@ package com.finegamedesign.freecelltrainer
                 for (var c:int = 0; c < foundations[f].length; c++) {
                     var card:Card = foundation[cardPrefix + "_" + c];
                     card.txt.text = Model.value(foundations[f][c]).toString();
-                    card.btn.visible = c == foundations[f].length - 1 ? true : false;
+                    card.btn.visible = model.canMove(prefix, f, c);
                     populateCardButton(card.btn);
                     if ("disable" != card.currentLabel) {
                         card.gotoAndStop("disable");
@@ -67,11 +67,15 @@ package com.finegamedesign.freecelltrainer
             if (!model.dragging) {
                 model.dragging = true;
                 selected = Card(e.currentTarget.parent);
+                var names:Array = selected.parent.name.split("_");
+                model.from(names[0], parseInt(names[1]));
                 selected.visible = false;
                 cursor.txt.text = selected.txt.text;
                 cursor.suit.gotoAndStop(selected.suit.currentFrame);
                 cursor.gotoAndStop(selected.currentLabel);
-                cursor.btn.visible = false;
+                cursor.btn.visible = true;
+                cursor.mouseChildren = false;
+                cursor.mouseEnabled = false;
             }
         }
 
@@ -81,6 +85,7 @@ package com.finegamedesign.freecelltrainer
             if (null != selected) {
                 selected.visible = true;
                 selected = null;
+                model.cancel();
             }
         }
 
