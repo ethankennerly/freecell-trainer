@@ -1,0 +1,193 @@
+TODO
+	Kongregate user: "Problems after inputting Universal on lvl9 and no score for Presented on lvl10"
+	Load in under 10 seconds.
+	If length or word not valid, hide submit button.
+	Limit 6x3 until higher grade.
+	Positive words.
+	Reset without reshuffling.
+	Kongregate users expect mute button.
+	If no vowel, auto restart.
+	Click input to remove.
+	Score by grade.
+	Easy words near reading order.
+	"I" does not look like 1.
+	Tidy names.
+	Compound words.
+	Animate score.
+	By length, gemstones
+
+Sat 02/08/2014 
+21:21
+
+Jumble Jong
+#7 Popular Puzzle Games
+Yahoo Games
+
+http://games.yahoo.com/game/jumble-jong-yap.html
+
+"""
+More than 2 million plays
+Jumble Jong combines America's #1 word puzzle with the timeless Chinese tile game of mah jong. It challenges players to create words using letter tiles. Extra points are awarded for finding and unscrambling the Jumble Bonus Words!
+"""
+
+Jumble bonus word is scrambled.
+Hint costs points.
+
+
+http://www.wordgames.com/word-mahjong.html
+
+http://www.games.com/play/masque-publishing/bird-word-mahjongg
+
+Word Mahjong 
+
+Time limit.
+
+Ideas:
+
+Spell Stones
+Rune Stones
+Spell Blocks
+Jumble Words
+Word Tiles
+Word Blocks
+Writer's Block
+
+Pick any tiles, not just at edges.
+Mobile phone:  7x5 grid.
+At low levels:  simple, short, frequent easy words whose consecutive letters are adjacent and left-to-right or top-to-bottom.
+At high levels: complex, long, infrequent difficult words whose consecutive letters are distant and randomly positioned.
+Point is not on letter.  Point is on difficulty of level.
+Click letter to remove.
+
+Click or Type the letter.
+That letter is selected.  Click enter.  Click letters to remove.  (Jumble Jong)
+Or click where letters were to remove (Jumble Jong).
+Score points by length of word.  
+	0	0	1	2	4	8	16	32	...
+Wildcard stone.
+Click to restart.
+Fill in blank with wildcard.
+Maybe some blanks at edges does not need to be a full grid.
+
+
+Levels
+	columns	rows
+	3	2
+	3	3
+	4	3
+	5	3
+	5	4
+	6	4
+	7	5
+
+Finish in time to level up.
+Embed dictionary
+Sorted in order of difficulty
+Time bonus.
+Mix easy and difficult words.
+easy words in easy reading order.
+
+Tiles are shuffled from words.
+Positive feeling words.
+Simple word lists
+themes of words, such as categories: animals.
+
+Logic of English High Frequency Word List Level 1
+Logic of English High Frequency Word List Level 2
+Logic of English High Frequency Word List Level 3
+Logic of English High Frequency Word List Level 4
+Logic of English High Frequency Word List Level 5
+Logic of English High Frequency Word List Level 6
+
+http://www.logicofenglish.com/resources/spelling-lists/high-frequency-word-lists
+
+http://www.infochimps.com/datasets/word-list-100000-official-crossword-words-excel-readable
+
+http://www.bigiqkids.com/SpellingVocabulary/Lessons/wordlistFinder.shtml
+
+http://www.allaboutlearningpress.com/free-spelling-lists
+
+at least 3 letters or more in the word.
+
+http://www.popcap.com/games/bookworm/online
+
+Eidetic Memory with letters to type.
+Swap tiles to form words. (W.E.L.D.E.R.)
+Letter Dice.  Spell as many words with those letters in time.  (Jitters, Word Fu+)
+
+Cannot type letter that does not extend to a valid prefix of a word.
+By letters are unlocked when side is open make words easier with columns.
+
+starts with:  see first letter and how many letters.  fill in those words.
+
+http://www.games.com/play/play-at-joes/word-zen
+word lengths in art.
+http://www.games.com/play/aol-inc/the-book-of-treasures
+
+Tile has text for a letter.  Embed font.  
+
+Wild Word Garden (by FitBrains)
+http://games.yahoo.com/game/wild-word-garden-flash.html
+
+Word Raider looks like the lesson and story and play are orthogonal.
+http://www.youtube.com/watch?v=nb4XLFOhmTg
+
+Letter Garden
+
+http://www.games.com/game/masque-publishing/letter-garden
+
+Clear rows and columns
+
+Olko animates rule of Mahjongg with forks that come from edges.  So it is intuitive can only select from edges.  Cannot select from interior.
+http://www.wordgames.com/olko.html
+
+Word Garden
+
+Word Tower
+http://www.mindjolt.com/word-tower.html
+
+Clear rows
+
+Word Battle
+
+Compose words from letters, (an element of Scrabble).
+http://www.games.com/play/sia-fufla/word-battle
+
+Word Pyramid
+
+http://www.mindjolt.com/the-word-pyramid.html
+
+Expected letter lengths.
+
+Word Chaos
+
+Word with 3 different letters beginning
+http://www.mindjolt.com/word-chaos.html
+
+Sat 02/22/2014 
+08:09
+
+SPELL WORDS TO CLEAR THE BOARD.A ONE-DAY GAME BY ETHAN KENNERLY, FEBRUARY 22, 2014
+
+Sat 02/22/2014 
+14:40
+
+Shuffled letters is hard.  In order is easy.  
+
+Fill randomly, fit remainder.
+Fill from corners.
+Compose tiles.
+Swap some letters.
+Fill board by shapes.  
+
+Set possibles at corners.
+Randomly select cell from possibles to be a cursor.
+Select a random neighbor to spell a word.
+If no neighbor, select from possibles.
+
+
+Sat 02/22/2014 
+16:40
+
+Planning several words ahead feels tedious to then click those words.
+

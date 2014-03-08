@@ -1,0 +1,378 @@
+TODO
+	Copy Spellstone.
+	Read instruction.
+	Model tableau.
+	View tableau.
+	Drag and drop card to cell.
+	Highlight cell.
+	Model targets of alternating colors.
+	Highlight alternating color destination.
+	Drag and drop card to tableau.
+	Detect stack.
+	Auto stack card on foundation.
+	Score.
+	10 levels.
+	Backtrack a configuration.
+	Upload to finegamedesign.com/wedding-cake-builder
+	Upload to Kongregate.
+	Email friends.
+
+Fri 02/21/2014 
+20:14
+
+solitaire
+
+http://www.games.com/brain-games
+http://www.games.com/play/dekovir-entertainment/puzzle-solitaire
+http://www.games.com/play/cyberzine/math-lines
+
+http://worldofsolitaire.com/
+
+4 minutes or less.
+	Aces Up
+
+http://www.games.com/game/dekovir-entertainment/puzzle-solitaire
+
+AARP?
+
+http://playfree1.blogspot.com/2013/02/sheriff-tripeaks.html
+
+http://think.gamesxl.com/christmas-solitaire.html
+
+http://www.gunghoonline.com/games/puzzle-dragons/
+
+
+
+"""
+Learn something new that you’re not familiar with. I’ve written about brain games, which are generally good for “exercising” your brain; but, there are many other things that can increase brain activity, such as learning how to play a new instrument or sport, picking up a new hobby, or learning a new language. The important thing is that it needs to be something unfamiliar. If you already play bridge, switching to solitaire is less effective at improving cognitive function than something vastly different, such as taking ukelele lessons. By performing diverse tasks, you’re working out different parts of your brain.
+"""
+http://www.everydayhealth.com/columns/keith-black-brain-health/5-ways-to-improve-brain-health/
+
+
+http://www.adlnet.gov/from-adl-team-member-shane-gallagher-can-playing-video-games-improve-cognition-and-adaptability/
+
+
+"""
+Drs. Jimison and Pavel, and Ms. Williams are employees of Spry Learning, a company that may have a commercial interest in the results of this research. This potential conflict was reviewed and a management plan approved by the OHSU Conflict of Interest in Research Committee was implemented.”
+"""
+
+"""
+"It requires significant planning to play well, and planning is one measure that neuropsychologists attempt to test in clinical situations," Jimison said. "We're trying to replicate that, and we've been able to show that we can, at least in early studies with small numbers of people, show distinctions between cognitively healthy elders and those with even mild cognitive impairment."
+
+Jimison and study co-author Misha Pavel, Ph.D., professor of biomedical engineering and computer science and electrical engineering at OHSU's OGI School of Science & Engineering, studied nine people with an average age of 80. All were regular computer users who played the FreeCell game frequently over a six-month period. Each participant was given a cognition score based on a brief battery of tests, and three were found to have mild cognitive impairment.
+
+To measure cognitive performance, researchers compared each user's play efficiency to a game "solver" within the program that checks card layouts throughout a game and calculates the minimal number of moves to complete it. The solver is a "dynamic algorithm that is solving the game at every moment in time, and it knows the minimal number of steps you would need to complete it," Jimison said. "We compare this 'optimal slope' to how the individual users are doing."
+
+The FreeCell study laid the groundwork for follow-up research, funded by the National Institutes of Standards and Technology's Advanced Technology Program, or NIST ATP, examining games with "dynamic adaptability," a system that keeps games fun and challenging, but still able to simultaneously collect data. For example, scientists can program the FreeCell game to automatically adjust difficulty with each new card layout based on the user's performance on the previous game, and users also can receive hints, if they choose, along the way.
+
+"In general, we're trying to keep people at a 75 percent win rate," said Jimison, who also serves as senior research scientist for Portland-based computer game developer and ORCATECH partner Spry Learning Co., which received the NIST ATP grant, and helped adapt and test the FreeCell game. "We're trying to keep difficulty at a level that keeps them motivated. We want to challenge them to the point where they just start having trouble. We don't want it to be too easy or too hard."
+
+Pavel believes that as the growing elderly population increases, the incidence of chronic illness – an estimated 80 percent of adults older than 65 report having at least one chronic illness, and half of all adults have at least two – such home monitoring technology will become a health care standard.
+"""
+http://www.ohsu.edu/xd/about/news_events/news/2006/07-17-computer-card-game-detec.cfm
+
+
+
+"""
+Games historian David Parlett notes that back when the game was known as "patience," playing it was actually viewed as a virtue, "an exercise of patience--- in its literal sense." lBack in 2003, Professor Jeffrey Goldstein    and his team from the University of Utrecht studied occupants of both a nursing home and an insurance company. At "Level Up," the Digital Games Research Association conference in the Netherlands, they reported that their test subjects' cognitive skills and general sense of wellbeing ranked statistically higher after playing computer solitaire.
+"""
+http://www.psychologytoday.com/blog/dream/201112/playing-ones-self
+
+
+http://en.wikipedia.org/wiki/Patience_(game)
+
+
+http://en.wikipedia.org/wiki/FreeCell
+
+"""
+One of the oldest ancestors of FreeCell is Eight Off. In the June 1968 edition of Scientific American, Martin Gardner described in his "Mathematical Games" column a game by C. L. Baker that is similar to FreeCell, except that cards on the tableau are built by suit rather than by alternate colors. Gardner wrote, "The game was taught to Baker by his father, who in turn learned it from an Englishman during the 1920s."[2] This variant is now called Baker's Game. FreeCell's origins may date back even further to 1945 and a Scandinavian game called Napoleon in St. Helena (not the game Napoleon at St. Helena, also known as Forty Thieves).[3]
+"""
+
+"""
+Rules[edit]
+
+Construction and layout[edit]
+One standard 52-card deck is used.
+There are four open cells and four open foundations. Some alternate rules use between one to ten cells.
+Cards are dealt into eight cascades, four of which comprise seven cards and four of which comprise six. Some alternate rules will use between four to ten cascades.
+Building during play[edit]
+The top card of each cascade begins a tableau.
+Tableaux must be built down by alternating colors.
+Foundations are built up by suit.
+Moves[edit]
+Any cell card or top card of any cascade may be moved to build on a tableau, or moved to an empty cell, an empty cascade, or its foundation.
+Complete or partial tableaus may be moved to build on existing tableaus, or moved to empty cascades, by recursively placing and removing cards through intermediate locations. Computer implementations often show this motion, but players using physical decks typically move the tableau at once.
+Victory[edit]
+The game is won after all cards are moved to their foundation piles.
+""""
+
+
+
+"""
+FreeCell solitaire is a strategy card game that is unique to other games of its kind. One of the reasons it's so popular and interesting is because when the right strategy is used and the right moves made, it's possible to win almost every game. This card game does not primarily depend on luck. Skill is the main factor that determines whether you win or lose the game.
+The goal is to place the cards of the same suite in an ascending order (from Ace to King) on the top right hand side of the playing board. On the lower half you place them in descending order (from King to Ace) in alternating colors. The left hand side of the playing board has 4 slots (called free cells) that can be used for storing the cards allowing you to move others around so you can get to the ones that you need.
+
+One thing that makes FreeCell so unique is the fact that all the cards are face up right from the very beginning. You can see the exact location of every card and plan your moves accordingly. It's for this reason the game is based more on the type of strategy you use instead of pure luck. The following tips on how to win at FreeCell solitaire will help to improve your success rate each time you play the game. 
+
+The first thing that you need to do is stop, take a few minutes and examine the board. Look where everything is located and consider what's going to happen next after you make a move.
+Play three or four moves, then stop and re-examine the board to see what options you have at this point before making the next moves.
+Make empty columns as soon as possible to give yourself more room to maneuver other cards.
+Whenever possible start an empty column off with a king.
+Search for the aces and make it a point to get them free as early in the game as possible. While doing this consider where the 2's and 3's are located as well.
+Keep in mind that the moves that seem to be the obvious choice are not always the best choice. You may need to make other moves to free up cards that you will need later.
+Keep the free cells empty whenever possible to give you more options throughout the game.
+Maneuverability is the key to winning FreeCell. Once you run out of space to move the cards around and there are no more plays, the game is over and you lose. When planning out your strategy keep this in mind.
+As with any game, practice makes prefect so the more you play the easier it will be for you to determine ahead of time what moves to make. Combine the tips listed above with practice and before long, you will be winning more games than you lose.
+"""
+http://voices.yahoo.com/tips-win-freecell-solitaire-2799210.html?cat=19
+
+
+FreeCell Trainer
+
+Easier levels:
+Smaller deck with fewer cards.
+Low ranking cards toward end of tableau columns.
+Solution played backwards randomly.
+Monte Carlo Tree Search with higher rate of winning.
+High variance.
+
+"""
+Rule 2 - Easy
+Four FreeCells are available and the cards are shuffled in such a way that low ranking card are dealt towards the exposed end of the tableau columns rather than being buried deep. This makes the game easier and so the bonus has been lowered.
+"""
+http://www.solitairecity.com/iPhone/FreeCell_Rules.shtml
+
+Graphics
+Names
+	Wedding Cake Builder
+	Cake Columns
+	Wedding Cake Stand
+	Wedding Cake Tower
+	Tier Cake Builder
+	Column Cake
+	Birthday Cake Builder
+	Cake Tower
+	Cake Builder
+	CakeCraft
+	Pyramid Cake
+	Tower of Cake
+	Birthday Cake Tower
+	Wedding Cake
+	Christmas Tree
+	FreeCell Tower
+	FreeCell Cake
+	FreeCake
+	FreeCellPhone
+	Puzzle Cake
+	Puzzle Tower
+	Tower Construction
+	Tower of Babel
+	Towers of Hanoi
+	Standing Stones
+	Cairn
+	Totem Pole
+
+http://www.cooking4game.com/cooking/pyramid-cake-decor/
+
+http://www.amazon.com/Baking-It-Ltd-Cake-Stacker/dp/B00EGS7ZUA
+
+https://www.bakingshop.com/weddingcakes/cakestand.htm
+
+Cake:  Layers are cake or columns.  Must alternate and diminish in size of stacking.  Only columns diminish in size.  Cake fits columns exactly.  Columns have a little groove.
+Tower:  Layers are either windows or floors.  Must alternate and diminish in size of stacking.
+Puzzle Tower:  Assembled tower makes a beautiful figure that was not obvious from its parts.
+
+
+"A Birthday Cake Tower - Building Blocks Stack Game"
+https://itunes.apple.com/us/app/birthday-cake-tower-building/id684349786?mt=8
+
+"Birthday Cake Tower Maker Full - Extreme Sweet Shop Stacking Game for Kids"
+http://www.appszoom.com/iphone-apps/entertainment/birthday-cake-tower-maker-full-extreme-sweet-shop-stacking-game-for-kids_jiftu.html
+
+http://www.gamesgames.com/game/strawberry-cake-builder
+
+Cake Builder
+http://cookinggamesforkids.us/cake-builder/
+
+Cake Tower
+http://www.games1.com/Game/Cake_Tower
+
+https://www.google.com/search?q=%22tower+cake%22&espv=210&es_sm=93&biw=1242&bih=641&tbm=isch&tbo=u&source=univ&sa=X&ei=nAkOU63qOpKJogT3toKABQ&ved=0CCcQsAQ
+
+Tower Blaster
+http://www.funnygames.co.uk/tower-builder.htm
+
+http://www.girlsgogames.com/tag/cake-games.html
+
+http://www.colincowieweddings.com/wedding-photos/detail/cake4lynchcm
+
+Mouse down on card.  Highlight which cells or positions it may move to.
+
+Title screen has trivial example.
+
+Identify base.  Identify top.
+4 bases in two varieties:  columns or floors.  Enumerate and color code.  Clearly divide.
+
+	  1
+	 -2-
+	--3--
+
+	  A
+B
+C
+
+Why do colors alternate in FreeCell?  Wouldn't the complexity of the abstract rules be just the same if the colors were the same?  Black/Black, Red/Red.
+
+If alternating, alternate direction of leaning.
+
+	   1-
+	 --2
+	   3---
+
+	  -A
+	   B--
+	---C
+
+Christmas Tree, green and white.
+ 
+	   1-
+	 --2
+	   3---
+
+	  #1
+	   2##
+	###3
+
+Star on top.  Base on bottom.
+
+If a type of solitaire where not all cards are visible, dynamically adjust next card dealt according to performance.
+
+"""
+Jimison and study co-author Misha Pavel, Ph.D., professor of biomedical engineering and computer science and electrical engineering at OHSU's OGI School of Science & Engineering, studied nine people with an average age of 80. All were regular computer users who played the FreeCell game frequently over a six-month period. Each participant was given a cognition score based on a brief battery of tests, and three were found to have mild cognitive impairment.
+
+To measure cognitive performance, researchers compared each user's play efficiency to a game "solver" within the program that checks card layouts throughout a game and calculates the minimal number of moves to complete it. The solver is a "dynamic algorithm that is solving the game at every moment in time, and it knows the minimal number of steps you would need to complete it," Jimison said. "We compare this 'optimal slope' to how the individual users are doing."
+
+The FreeCell study laid the groundwork for follow-up research, funded by the National Institutes of Standards and Technology's Advanced Technology Program, or NIST ATP, examining games with "dynamic adaptability," a system that keeps games fun and challenging, but still able to simultaneously collect data. For example, scientists can program the FreeCell game to automatically adjust difficulty with each new card layout based on the user's performance on the previous game, and users also can receive hints, if they choose, along the way.
+"""
+
+Alternating increases solutions from about 1 in 4 to about 1 in 78,000!
+
+http://politaire.com/help/bakers
+http://politaire.com/help/freecell
+
+http://politaire.com/freecell
+
+Much easier with 2 suits Ace to 9, 4 columns.
+
+Weird that can stack alternating colors in tableau, but same suit in foundation.
+
+
+	   1-
+	 --2
+	   3---
+
+	  #1
+	   2##
+	###3
+
+Foundation
+
+
+	   3---
+	   2--
+	   1-  
+
+	   3###
+	   2##
+	   1#
+
+
+Bakers
+
+http://politaire.com/bakers
+
+2 decks with only clubs and hearts.  Same color (equivalent to same suit).  1 to 9.
+
+8 columns.  Easy to see.
+
+The rules are more intuitive to see.  
+
+Highlight next foundation piece that may be played.  this is a layer to try to uncover.
+
+2 cells is harder.
+
+2 column
+decks	suits	values	cells	columns	alt	solve percent
+1	1	5	2	2	0	90
+1	2	5	2	3	0	90
+1	1	9	2	2	0	90
+1	2	9	4	4	0	85
+1	2	9	2	4	0	80
+1	4	13	4	8	0	75
+2	2	9	4	8	0	50
+1	1	9	1	2	0	1
+
+http://politaire.com/2suit9value4cell4column
+
+Wed 03/05/2014 
+22:05
+
+Feels like there is one card that is blocking others.  Finding that key unlocks a cascade of cards flying to their foundations.
+
+score:  cascade.  value of move going to foundation drops.  time bonus drops.
+
+recognize no moves left.
+
+maximum height of a column is what?
+
+powermove, or supermove needs cells or columns to move.
+
+http://ezinearticles.com/?Freecell-PowerMoves-Explained&id=104608
+
+this can be dealt with by disabling supermoves or powermoves.
+
+http://www.geocities.jp/technoart_jp/Freecell/Freecell_for_after_retirement_E.htm
+
+http://games.aarp.org/games/freecell.aspx
+
+guarantee solution:
+randomly move from solved state.  
+taboo move that makes a state already visited.  
+count of moves correlates to difficulty.
+count does not necessarily indicate shortest number of moves.
+not stacking in order helps.
+
+combo points for each consecutive move to foundation.
+
+drag and drop.
+during drag, light up available tiles.
+
+tutor:  specify deal.
+	....__
+	columns: [[0, 1, 4], [3, 2]]
+
+specify suit in hundreds place.
+
+diagram
+	
+	,,
+	0,1,4
+	3,2
+
+or 0 represents empty:
+
+	0
+	0,0
+	1,2,5
+	4,3
+
+key:
+
+	foundations
+	cells
+	column
+	column
+
+illustrate 52 classes.   number in middle.
+
+
