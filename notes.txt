@@ -1,7 +1,4 @@
 TODO
-	Read instruction.
-	Model tableau.
-	View tableau.
 	Drag and drop card to cell.
 	Highlight cell.
 	Model targets of alternating colors.

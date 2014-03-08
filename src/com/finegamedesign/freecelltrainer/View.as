@@ -8,20 +8,13 @@ package com.finegamedesign.freecelltrainer
     public class View
     {
         internal var model:Model;
-        internal var originalRoomHeight:int = -1;
-        internal var originalRoomWidth:int = -1;
-        internal var originalTileWidth:int = 80;
         internal var room:DisplayObjectContainer;
-        internal var scale:Number;
-        internal var tileWidth:int;
-        internal var table:Array;
-        private var isMouseDown:Boolean;
-        private var mouseJustPressed:Boolean;
+        private var cursor:Card;
+        private var selected:Card;
         private var ui:Main;
 
         public function View()
         {
-            table = [];
         }
 
         /**
@@ -33,11 +26,11 @@ package com.finegamedesign.freecelltrainer
             this.model = model;
             this.room = room;
             this.ui = ui;
-            populateCards(model.foundations, room, "foundation");
-            populateCards(model.cells, room, "cell");
-            populateCards(model.columns, room, "column");
-            ui.feedback.txt.text = model.help;
-            room.addEventListener(MouseEvent.MOUSE_DOWN, mouseDown, false, 0, true);
+            ui.addEventListener(MouseEvent.MOUSE_UP, drop, false, 0, true);
+            cursor = Card(room.getChildByName("cursor"));
+            room.addEventListener(MouseEvent.MOUSE_MOVE, follow, false, 0, true);
+            ui.addEventListener(MouseEvent.ROLL_OUT, drop, false, 0, true);
+            update();
         }
 
         private function populateCards(foundations:Array,
@@ -48,13 +41,58 @@ package com.finegamedesign.freecelltrainer
                 var foundation:DisplayObjectContainer = room[prefix + "_" + f];
                 for (var c:int = 0; c < foundations[f].length; c++) {
                     var card:Card = foundation[cardPrefix + "_" + c];
-                    card.txt.text = foundations[f][c].toString();
-                    card.gotoAndStop("enable");
+                    card.txt.text = Model.value(foundations[f][c]).toString();
+                    card.btn.visible = c == foundations[f].length - 1 ? true : false;
+                    populateCardButton(card.btn);
+                    if ("disable" != card.currentLabel) {
+                        card.gotoAndStop("disable");
+                    }
+                    var suitFrame:int = Model.suit(foundations[f][c]) + 1;
+                    card.suit.gotoAndStop(suitFrame);
                 }
                 show(foundation, cardPrefix, c);
             }
             show(room, prefix, f);
         }
+
+        private function populateCardButton(btn:DisplayObject):void
+        {
+            if (!btn.hasEventListener(MouseEvent.MOUSE_DOWN)) {
+                btn.addEventListener(MouseEvent.MOUSE_DOWN, drag, false, 0, true);
+            }
+        }
+
+        private function drag(e:MouseEvent):void
+        {
+            if (!model.dragging) {
+                model.dragging = true;
+                selected = Card(e.currentTarget.parent);
+                selected.visible = false;
+                cursor.txt.text = selected.txt.text;
+                cursor.suit.gotoAndStop(selected.suit.currentFrame);
+                cursor.gotoAndStop(selected.currentLabel);
+                cursor.btn.visible = false;
+            }
+        }
+
+        private function drop(e:MouseEvent):void
+        {
+            model.dragging = false;
+            if (null != selected) {
+                selected.visible = true;
+                selected = null;
+            }
+        }
+
+        private function follow(e:MouseEvent):void
+        {
+            if (model.dragging) {
+                cursor.x = e.currentTarget.mouseX;
+                cursor.y = e.currentTarget.mouseY;
+            }
+            e.updateAfterEvent();
+        }
+
 
         private function show(room:DisplayObjectContainer, prefix:String, index:int):void
         {
@@ -62,42 +100,30 @@ package com.finegamedesign.freecelltrainer
                 var child:DisplayObject = room.getChildAt(c);
                 if (0 == child.name.indexOf(prefix)) {
                     var n:int = parseInt(child.name.split("_")[1]);
-                    child.visible = n < index;
+                    child.visible = n < index && selected != child;
                 }
             }
         }
 
-        private function mouseDown(event:MouseEvent):void
-        {
-            mouseJustPressed = !isMouseDown;
-            isMouseDown = true;
-        }
-
         private function mouseUp(event:MouseEvent):void
         {
-            mouseJustPressed = false;
-            isMouseDown = false;
+            model.dragging = false;
         }
 
-        private function selectDown(e:MouseEvent):void
-        {
-            mouseDown(e);
-            select(e);
-        }
-
-        private function select(e:MouseEvent):void
-        {
-            if (!isMouseDown) {
-                return;
-            }
-            var mc:MovieClip = MovieClip(e.currentTarget);
-            var index:int = parseInt(mc.name.split("_")[1]);
-            // trace("View.select: index " + index);
-            update();
-        }
-
+        /**
+         * Show cards that may be selected.
+         */
         internal function update():void
         {
+            populateCards(model.foundations, room, "foundation");
+            populateCards(model.cells, room, "cell");
+            populateCards(model.columns, room, "column");
+            ui.feedback.txt.text = model.help;
+            cursor.visible = model.dragging;
+            if (model.dragging) {
+                cursor.x = room.mouseX;
+                cursor.y = room.mouseY;
+            }
         }
 
         internal function clear():void

@@ -3,23 +3,35 @@ package com.finegamedesign.freecelltrainer
     public class Model
     {
         internal static const EMPTY:int = 0;
+        internal static const RADIX:int = 100;
         internal static var levels:Array = [
-            {foundations: [[0]], 
-             cells: [[0]], 
+            {foundations: [[]], 
+             cells: [[]], 
              columns: [[1, 2]], 
-             help: "You may drag a bottom layer to any empty pan."},
-            {foundations: [[0], [100]], 
+             help: "To build a cake, you may drag a bottom layer to any empty pan."},
+            {foundations: [[], []], 
              cells: [[102]], 
              columns: [[1, 103], [101, 2]], 
-             help: "You may drag a bottom layer to the next smaller layer of the opposite flavor."},
+             help: "To build two cakes, you may drag a bottom layer to below the next higher layer of the opposite flavor."},
             {backsteps: 5,
              foundations: [[1, 2, 3], [101, 102, 103]], 
-             cells: [[0]], 
+             cells: [[]], 
              columns: [[], []], 
-             help: "Build both two cakes.  You may drag a bottom layer to an empty pan or the next smaller layer of the opposite flavor."},
+             help: "Build both two cakes.  You may drag a bottom layer to an empty pan or to below next higher layer of the opposite flavor."},
         ];
 
+        internal static function suit(card:int):int
+        {
+            return card / Model.RADIX;
+        }
+
+        internal static function value(card:int):int
+        {
+            return card % Model.RADIX;
+        }
+
         internal var backsteps:int = 0;
+        internal var dragging:Boolean = false;
         internal var cells:Array = [];
         internal var foundations:Array = [[]];
         internal var highScore:int = 0;
