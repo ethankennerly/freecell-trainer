@@ -1,5 +1,7 @@
 package com.finegamedesign.freecelltrainer
 {
+    import flash.utils.ByteArray; 
+        
     public class Model
     {
         internal static const EMPTY:int = 0;
@@ -36,6 +38,15 @@ package com.finegamedesign.freecelltrainer
             return card % RADIX;
         }
 
+        // http://help.adobe.com/en_US/ActionScript/3.0_ProgrammingAS3/WS5b3ccc516d4fbf351e63e3d118a9b90204-7ee7.html
+        private static function clone(source:Object):* 
+        { 
+            var myBA:ByteArray = new ByteArray(); 
+            myBA.writeObject(source); 
+            myBA.position = 0; 
+            return(myBA.readObject()); 
+        }
+
         internal var backsteps:int = 0;
         internal var dragging:Boolean = false;
         internal var cells:Array = [];
@@ -49,7 +60,8 @@ package com.finegamedesign.freecelltrainer
         internal var onDeselect:Function;
         internal var onDie:Function;
         internal var onDieBonus:Function;
-        internal var selected:int = -1;
+        internal var selected:int = EMPTY;
+        internal var selectedColumn:Array;
         internal var score:int = 0;
         internal var restartScore:int = 0;
         internal var round:int = 1;
@@ -69,13 +81,14 @@ package com.finegamedesign.freecelltrainer
             restartScore = 0;
         }
 
+
         internal function populate(levelParams:Object):void
         {
             for (var param:String in levelParams) {
-                this[param] = levelParams[param];
+                this[param] = clone(levelParams[param]);
             }
             round++;
-            selected = -1;
+            selected = EMPTY;
             restartScore = score;
         }
 
@@ -117,15 +130,57 @@ package com.finegamedesign.freecelltrainer
                 from(name, columnIndex, false);
         }
 
+        internal function drag(name:String, columnIndex:int):void
+        {
+            if (!dragging) {
+                dragging = true;
+                var column:Array = this[name + "s"][columnIndex];
+                var card:int = column[column.length - 1];
+                selected = card;
+                selectedColumn = column;
+                from(name, columnIndex);
+                column.pop();
+            }
+        }
+
+        internal function cancelDrag():void
+        {
+            if (dragging) {
+                dropSelected();
+            }
+        }
+
+        private function dropSelected():void
+        {
+            if (dragging) {
+                dragging = false;
+                hideEmpty();
+                selectedColumn.push(selected);
+                selectedColumn = null;
+                selected = EMPTY;
+            }
+        }
+
+        internal function drop(name:String, columnIndex:int):void
+        {
+            if (dragging) {
+                selectedColumn = this[name + "s"][columnIndex];
+                dropSelected();
+            }
+        }
+
         /**
          * @param   push    Hold place at each column this may go to.
-         * @return  last card can move.
+         * @return  top card can move.
          */
         internal function from(name:String, columnIndex:int, push:Boolean=true):Boolean
         {
             var column:Array = this[name + "s"][columnIndex];
             var card:int = column[column.length - 1];
             var canMove:Boolean = false;
+            if (EMPTY == card) {
+                return canMove;
+            }
             for (var c:int = 0; c < cells.length; c++) {
                 if (cells[c].length == 0) {
                     canMove = true;
@@ -146,7 +201,7 @@ package com.finegamedesign.freecelltrainer
             return canMove;
         }
 
-        internal function cancel():void
+        internal function hideEmpty():void
         {
             popEmpty(cells);
             popEmpty(columns);

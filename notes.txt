@@ -1,10 +1,4 @@
 TODO
-	Drag and drop card to cell.
-	Highlight cell.
-	Model targets of alternating colors.
-	Highlight alternating color destination.
-	Drag and drop card to tableau.
-	Detect stack.
 	Auto stack card on foundation.
 	Score.
 	10 levels.
