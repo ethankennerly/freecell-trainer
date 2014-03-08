@@ -22,28 +22,30 @@ package com.finegamedesign.freecelltrainer
         internal var backsteps:int = 0;
         internal var cells:Array = [];
         internal var foundations:Array = [[]];
-        internal var level:int;
+        internal var highScore:int = 0;
+        internal var help:String = "";
+        internal var level:int = 1;
+        internal var levelMax:int = levels.length;
         internal var tableau:Array = [[]];
         internal var onContagion:Function;
         internal var onDeselect:Function;
         internal var onDie:Function;
         internal var onDieBonus:Function;
-        internal var selected:int;
-        internal var highScore:int;
-        internal var score:int;
-        internal var restartScore:int;
-        internal var round:int;
+        internal var selected:int = -1;
+        internal var score:int = 0;
+        internal var restartScore:int = 0;
+        internal var round:int = 1;
         internal var roundMax:int = levels.length;  
                                     // 1;  // debug
 
         public function Model()
         {
-            highScore = 0;
             restart();
         }
 
         internal function restart():void
         {
+            level = 1;
             round = 1;
             score = 0;
             restartScore = 0;
@@ -64,7 +66,6 @@ package com.finegamedesign.freecelltrainer
          */
         private function scoreUp(length:int):void
         {
-            kill += length;
             var points:int = Math.pow(2, length - 3);
             points *= 10;
             score += points;
@@ -77,23 +78,8 @@ package com.finegamedesign.freecelltrainer
         private function bonus(length:int):void
         {
             if (null != onDie) {
-                var bonus:int = 0;
-                if (length <= Model.LETTER_MIN + 1) {
-                    bonus = 0;
-                }
-                else if (length <= Model.LETTER_MIN + 2) {
-                    bonus = 1;
-                }
-                else if (length <= Model.LETTER_MIN + 3) {
-                    bonus = 2;
-                }
-                else if (length < Model.LETTER_MAX) {
-                    bonus = 3;
-                }
-                else {
-                    bonus = 4;
-                }
-                onDie(bonus);
+                var amount:int = Math.max(0, Math.min(4, length - 2));
+                onDie(amount);
             }
         }
 

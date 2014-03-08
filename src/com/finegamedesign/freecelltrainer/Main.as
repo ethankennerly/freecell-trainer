@@ -46,9 +46,9 @@ package com.finegamedesign.freecelltrainer
         public var feedback:MovieClip;
         public var highScore_txt:TextField;
         public var level_txt:TextField;
-        public var kill_txt:TextField;
-        public var maxLevel_txt:TextField;
-        public var maxKill_txt:TextField;
+        public var round_txt:TextField;
+        public var levelMax_txt:TextField;
+        public var roundMax_txt:TextField;
         public var room:MovieClip;
         public var score_txt:TextField;
         public var restartTrial_btn:SimpleButton;
@@ -64,8 +64,6 @@ package com.finegamedesign.freecelltrainer
         public var submit:SimpleButton;
 
         private var inTrial:Boolean;
-        private var level:int;
-        private var maxLevel:int;
         private var model:Model;
         private var view:View;
 
@@ -83,15 +81,14 @@ package com.finegamedesign.freecelltrainer
         {
             removeEventListener(Event.ADDED_TO_STAGE, init);
             inTrial = false;
-            level = 1;
-            maxLevel = Model.levels.length;
             model = new Model();
             model.onContagion = contagion.play;
             model.onDie = scoreUp;
             model.onDieBonus = bonus.play;
             model.onDeselect = die.play;
+            model.level = 1;
             view = new View();
-            trial(level);
+            trial(model.level);
             addEventListener(Event.ENTER_FRAME, update, false, 0, true);
             level_txt.addEventListener(MouseEvent.CLICK, cheatLevel, false, 0, true);
             restartTrial_btn.addEventListener(MouseEvent.CLICK, restartTrial, false, 0, true);
@@ -106,9 +103,9 @@ package com.finegamedesign.freecelltrainer
 
         private function cheatLevel(event:MouseEvent):void
         {
-            level++;
-            if (maxLevel < level) {
-                level = 1;
+            model.level++;
+            if (model.levelMax < model.level) {
+                model.level = 1;
             }
         }
 
@@ -123,8 +120,8 @@ package com.finegamedesign.freecelltrainer
             if (!inTrial) {
                 inTrial = true;
                 mouseChildren = true;
-                model.kill = 0;
-                model.maxKill = 0;
+                model.round = 0;
+                model.roundMax = 0;
                 model.populate(Model.levels[level - 1]);
                 view.populate(model, room, this);
             }
@@ -135,10 +132,10 @@ package com.finegamedesign.freecelltrainer
             // trace("updateHudText: ", score, highScore);
             score_txt.text = model.score.toString();
             highScore_txt.text = model.highScore.toString();
-            level_txt.text = level.toString();
-            maxLevel_txt.text = maxLevel.toString();
-            kill_txt.text = model.round.toString();
-            maxKill_txt.text = model.roundMax.toString();
+            level_txt.text = model.level.toString();
+            levelMax_txt.text = model.levelMax.toString();
+            round_txt.text = model.round.toString();
+            roundMax_txt.text = model.roundMax.toString();
         }
 
         private function update(event:Event):void
@@ -185,9 +182,9 @@ package com.finegamedesign.freecelltrainer
         private function win():void
         {
             inTrial = false;
-            level++;
-            if (Model.levels.length < level) {
-                level = 1;
+            model.level++;
+            if (model.levelMax < model.level) {
+                model.level = 1;
                 feedback.gotoAndPlay("complete");
                 complete.play();
             }
@@ -200,13 +197,13 @@ package com.finegamedesign.freecelltrainer
         private function lose():void
         {
             inTrial = false;
-            if (3 <= level) {
-                level = Math.max(2, level - 1);
+            if (3 <= model.level) {
+                model.level = Math.max(2, model.level - 1);
             }
             FlxKongregate.api.stats.submit("Score", model.score);
             mouseChildren = false;
             feedback.gotoAndPlay("wrong");
-            feedback.txt.text = "EXAMPLES:\n" + model.words.join(", ");
+            feedback.txt.text = model.help;
             wrong.play();
         }
 
@@ -220,17 +217,16 @@ package com.finegamedesign.freecelltrainer
                 if (currentFrame < totalFrames) {
                     nextFrame();
                 }
-                if (level <= 1 || model.roundMax <= model.round) {
+                if (model.level <= 1 || model.roundMax <= model.round) {
                     restart();
                 }
-                trial(level);
+                trial(model.level);
             }
         }
 
         public function restart():void
         {
             model.restart();
-            level = 1;
             mouseChildren = true;
             gotoAndPlay(1);
         }
