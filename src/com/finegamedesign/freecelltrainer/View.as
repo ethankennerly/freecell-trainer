@@ -32,8 +32,29 @@ package com.finegamedesign.freecelltrainer
             this.model = model;
             this.room = room;
             this.ui = ui;
+            scale = fit();
+            // room.width = model.columnCount * tileWidth;
+            // room.height = model.rowCount * tileWidth;
+            table = [];
+            for (var i:int = 0; i < model.table.length; i++){
+                var cell:Card = new Card();
+                cell.scaleX = scale;
+                cell.scaleY = scale;
+                cell.txt.mouseEnabled = false;
+                cell.name = "cell_" + i.toString();
+                room.addChild(cell);
+                table.push(cell);
+            }
+            updateCells(model, table);
+            room.addEventListener(MouseEvent.MOUSE_DOWN, mouseDown, false, 0, true);
+            ui.submit.addEventListener(MouseEvent.CLICK, judge, false, 0, true);
+        }
+
+        private function fit():void
+        {
+            return 1.0;
             if (originalRoomWidth <= 0) {
-                originalTileWidth = new LetterTile().width;
+                originalTileWidth = new Card().width;
                 originalRoomHeight = room.height;
                 originalRoomWidth = room.width;
             }
@@ -46,21 +67,7 @@ package com.finegamedesign.freecelltrainer
                 tileWidth = widthPerTile;
             }
             scale = tileWidth / originalTileWidth;
-            // room.width = model.columnCount * tileWidth;
-            // room.height = model.rowCount * tileWidth;
-            table = [];
-            for (var i:int = 0; i < model.table.length; i++){
-                var cell:LetterTile = new LetterTile();
-                cell.scaleX = scale;
-                cell.scaleY = scale;
-                cell.txt.mouseEnabled = false;
-                cell.name = "cell_" + i.toString();
-                room.addChild(cell);
-                table.push(cell);
-            }
-            updateCells(model, table);
-            room.addEventListener(MouseEvent.MOUSE_DOWN, mouseDown, false, 0, true);
-            ui.submit.addEventListener(MouseEvent.CLICK, judge, false, 0, true);
+            return scale;
         }
 
         private function position(mc:MovieClip, i:int, columnCount:int, rowCount:int):void
@@ -132,7 +139,7 @@ package com.finegamedesign.freecelltrainer
         private function updateCells(model:Model, table:Array):void
         {
             for (var t:int = 0; t < table.length; t++) {
-                var cell:LetterTile = table[t];
+                var cell:Card = table[t];
                 cell.txt.text = model.table[t];
                 var label:String = 
                     Model.EMPTY == model.table[t]
@@ -163,7 +170,7 @@ package com.finegamedesign.freecelltrainer
         private function updateSelected(ui:Main, selected:Array):void
         {
             for (var i:int = 0; i < Model.LETTER_MAX; i++) {
-                var selection:LetterTile = ui["selected_" + i].tile;
+                var selection:Card = ui["selected_" + i].tile;
                 var label:String =  i < selected.length
                                     ? "select" 
                                     : "none";
@@ -200,7 +207,7 @@ package com.finegamedesign.freecelltrainer
                 table.splice(t, 1);
             }
             for (var c:int = room.numChildren - 1; 0 <= c; c--) {
-                if (room.getChildAt(c) is LetterTile) {
+                if (room.getChildAt(c) is Card) {
                     room.removeChild(room.getChildAt(c));
                 }
             }
