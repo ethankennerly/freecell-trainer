@@ -3,13 +3,19 @@ package com.finegamedesign.freecelltrainer
     import flash.display.DisplayObject;
     import flash.display.DisplayObjectContainer;
     import flash.display.MovieClip;
+    import flash.geom.Point;
     import flash.events.MouseEvent;
+
+    import com.greensock.easing.Linear;
+    import com.greensock.TweenLite;
 
     public class View
     {
+        private static var cardPrefix:String = "card";
         internal var model:Model;
         internal var room:DisplayObjectContainer;
         private var cursor:Card;
+        private var sweeps:Array = [];
         private var ui:Main;
 
         public function View()
@@ -32,6 +38,16 @@ package com.finegamedesign.freecelltrainer
             update();
         }
 
+        internal function clear():void
+        {
+            for each(var sweepCard:Card in sweeps) {
+                if (null != sweepCard.parent) {
+                    sweepCard.parent.removeChild(sweepCard);
+                }
+            }
+            sweeps = [];
+        }
+
         /**
          * Show cards that may be selected.
          */
@@ -40,8 +56,9 @@ package com.finegamedesign.freecelltrainer
             populateCards(model.foundations, room, "foundation");
             populateCards(model.cells, room, "cell");
             populateCards(model.columns, room, "column");
+            sweep();
             ui.feedback.txt.text = model.help;
-            cursor.visible = model.dragging;
+            cursor.visible = model.dragging && ! model.sweeping;
             if (model.dragging) {
                 cursor.x = room.mouseX;
                 cursor.y = room.mouseY;
@@ -51,7 +68,6 @@ package com.finegamedesign.freecelltrainer
         private function populateCards(foundations:Array,
                 room:DisplayObjectContainer, prefix:String):void
         {
-            var cardPrefix:String = "card";
             for (var f:int = 0; f < foundations.length; f++) {
                 var foundation:DisplayObjectContainer = room[prefix + "_" + f];
                 for (var c:int = 0; c < foundations[f].length; c++) {
@@ -125,11 +141,11 @@ package com.finegamedesign.freecelltrainer
 
         private function follow(e:MouseEvent):void
         {
-            if (model.dragging) {
+            if (model.dragging && !model.sweeping) {
                 cursor.x = e.currentTarget.mouseX;
                 cursor.y = e.currentTarget.mouseY;
+                e.updateAfterEvent();
             }
-            e.updateAfterEvent();
         }
 
 
@@ -147,6 +163,37 @@ package com.finegamedesign.freecelltrainer
         private function mouseUp(event:MouseEvent):void
         {
             model.dragging = false;
+        }
+
+        private function sweep():void
+        {
+            var nameFromTo:Object = model.sweep();
+            if (null != nameFromTo) {
+                var length:int = model.foundations[nameFromTo.to].length
+                var foundation:DisplayObjectContainer = room["foundation" + "_" + nameFromTo.to];
+                var card:Card = foundation[cardPrefix + "_" + length];
+                var target:Point = card.localToGlobal(new Point());
+                target = room.globalToLocal(target);
+                var column:DisplayObjectContainer = room[nameFromTo.name + "_" + nameFromTo.from];
+                var fromIndex:int = model[nameFromTo.name + "s"][nameFromTo.from].length;
+                var fromCard:Card = column[cardPrefix + "_" + fromIndex];
+                var from:Point = fromCard.localToGlobal(new Point());
+                from = room.globalToLocal(from);
+                var sweepCard:Card = new Card();
+                sweepCard.txt.text = Model.value(model.selected).toString();
+                sweepCard.suit.gotoAndStop(Model.suit(model.selected) + 1);
+                sweepCard.gotoAndStop("disable");
+                sweepCard.drag_btn.visible = false;
+                sweepCard.drop_btn.visible = false;
+                sweepCard.mouseChildren = false;
+                sweepCard.mouseEnabled = false;
+                sweeps.push(sweepCard);
+                sweepCard.x = from.x;
+                sweepCard.y = from.y;
+                room.addChild(sweepCard);
+                TweenLite.to(sweepCard, 0.5, {x: target.x, y: target.y, 
+                    ease:Linear.easeNone, onComplete: model.sweepEnd});
+            }
         }
     }
 }

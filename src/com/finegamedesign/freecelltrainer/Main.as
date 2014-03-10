@@ -204,6 +204,7 @@ package com.finegamedesign.freecelltrainer
         public function next():void
         {
             if (!inTrial) {
+                view.clear();
                 feedback.gotoAndPlay("none");
                 mouseChildren = true;
                 if (currentFrame < totalFrames) {
