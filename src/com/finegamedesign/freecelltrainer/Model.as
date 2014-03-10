@@ -16,12 +16,14 @@ package com.finegamedesign.freecelltrainer
              cells: [[102]], 
              columns: [[3, 103], [1, 101, 2]], 
              help: "To build two cakes, you may drag a bottom layer to below the next higher layer of the opposite flavor."},
-            {backsteps: 5,
-             foundations: [[1, 2, 3], [101, 102, 103]], 
+            {deck: [1, 2, 3, 101, 102, 103], 
+             foundations: [[], []], 
              cells: [[]], 
              columns: [[], []], 
              help: "Build both two cakes.  You may drag a bottom layer to an empty pan or to below next higher layer of the opposite flavor."},
         ];
+        private static var minValue:int = 1;
+        private static var maxValue:int = 3;
 
         internal static function suit(card:int):int
         {
@@ -38,6 +40,11 @@ package com.finegamedesign.freecelltrainer
             return card % RADIX;
         }
 
+        internal static function scale(card:int):Number
+        {
+            return 1.0 - 0.75 * (value(card) - minValue) / (maxValue - minValue);
+        }
+
         // http://help.adobe.com/en_US/ActionScript/3.0_ProgrammingAS3/WS5b3ccc516d4fbf351e63e3d118a9b90204-7ee7.html
         private static function clone(source:Object):* 
         { 
@@ -47,7 +54,16 @@ package com.finegamedesign.freecelltrainer
             return(myBA.readObject()); 
         }
 
-        internal var backsteps:int = 0;
+        private static function shuffle(array:Array):void
+        {
+            for (var i:int = array.length - 1; 1 <= i; i--) {
+                var j:int = (i + 1) * Math.random();
+                var tmp:* = array[i];
+                array[i] = array[j];
+                array[j] = tmp;
+            }
+        }
+
         internal var dragging:Boolean = false;
         internal var cells:Array = [];
         internal var foundations:Array = [[]];
@@ -70,6 +86,7 @@ package com.finegamedesign.freecelltrainer
         internal var round:int = 1;
         internal var roundMax:int = levels.length;  
                                     // 1;  // debug
+        private var deck:Array;
 
         public function Model()
         {
@@ -79,17 +96,18 @@ package com.finegamedesign.freecelltrainer
         internal function restart():void
         {
             level = 1;
-            round = 1;
+            round = 0;
             score = 0;
             restartScore = 0;
         }
 
-
         internal function populate(levelParams:Object):void
         {
+            deck = null;
             for (var param:String in levelParams) {
                 this[param] = clone(levelParams[param]);
             }
+            deal();
             round++;
             selected = EMPTY;
             restartScore = score;
@@ -97,6 +115,19 @@ package com.finegamedesign.freecelltrainer
                 + "\n    cells " + cells
                 + "\n    foundations " + foundations
                 + "\n    columns " + columns);
+        }
+
+        private function deal():void
+        {
+            if (null != deck) {
+                shuffle(deck);
+                for (var d:int = 0; d < deck.length; ) {
+                    for (var c:int = 0; 
+                            c < columns.length && d < deck.length; c++, d++) {
+                        columns[c].push(deck[d]);
+                    }
+                }
+            }
         }
 
         /**

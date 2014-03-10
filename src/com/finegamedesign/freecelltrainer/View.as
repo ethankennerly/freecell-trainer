@@ -53,10 +53,10 @@ package com.finegamedesign.freecelltrainer
          */
         internal function update():void
         {
+            sweep();
             populateCards(model.foundations, room, "foundation");
             populateCards(model.cells, room, "cell");
             populateCards(model.columns, room, "column");
-            sweep();
             ui.feedback.txt.text = model.help;
             cursor.visible = model.dragging && ! model.sweeping;
             if (model.dragging) {
@@ -84,6 +84,7 @@ package com.finegamedesign.freecelltrainer
                     }
                     var suitFrame:int = Model.suit(foundations[f][c]) + 1;
                     card.suit.gotoAndStop(suitFrame);
+                    card.suit.scaleX = Model.scale(value);
                     card.suit.visible = Model.EMPTY < value;
                 }
                 show(foundation, cardPrefix, c);
@@ -119,6 +120,7 @@ package com.finegamedesign.freecelltrainer
                 var selected:Card = doAt(model.drag, e);
                 cursor.txt.text = selected.txt.text;
                 cursor.suit.gotoAndStop(selected.suit.currentFrame);
+                cursor.suit.scaleX = selected.suit.scaleX;
                 cursor.gotoAndStop(selected.currentLabel);
                 cursor.drag_btn.visible = true;
                 cursor.drop_btn.visible = false;
@@ -182,6 +184,7 @@ package com.finegamedesign.freecelltrainer
                 var sweepCard:Card = new Card();
                 sweepCard.txt.text = Model.value(model.selected).toString();
                 sweepCard.suit.gotoAndStop(Model.suit(model.selected) + 1);
+                sweepCard.suit.scaleX = Model.scale(model.selected);
                 sweepCard.gotoAndStop("disable");
                 sweepCard.drag_btn.visible = false;
                 sweepCard.drop_btn.visible = false;
