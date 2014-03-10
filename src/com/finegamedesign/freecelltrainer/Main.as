@@ -210,7 +210,7 @@ package com.finegamedesign.freecelltrainer
                 if (currentFrame < totalFrames) {
                     nextFrame();
                 }
-                if (model.level <= 1 || model.roundMax < model.round) {
+                if (model.level <= 1 || model.levelMax < model.level) {
                     restart();
                 }
                 trial(model.level);

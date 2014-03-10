@@ -1,8 +1,8 @@
 TODO
-	Auto stack card on foundation.
-	Score combo minus turns in between.
 	10 levels.
-	Backtrack a configuration.
+	color and layout.
+	Score combo minus turns in between.
+	Correlate deal to difficulty.
 	Upload to finegamedesign.com/wedding-cake-builder
 	Upload to Kongregate.
 	Email friends.

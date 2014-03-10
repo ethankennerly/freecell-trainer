@@ -20,10 +20,16 @@ package com.finegamedesign.freecelltrainer
              foundations: [[], []], 
              cells: [[]], 
              columns: [[], []], 
-             help: "Build both two cakes.  You may drag a bottom layer to an empty pan or to below next higher layer of the opposite flavor."},
+             help: "Build both cakes.  You may drag a bottom layer to an empty pan or to below next higher layer of the opposite flavor."},
+            {suitCount: 2, valueCount: 5, cellCount: 2, columnCount: 2,
+             help: "Think ahead to build both cakes.  You may drag a bottom layer to an empty pan or to below next higher layer of the opposite flavor."},
+            {suitCount: 2, valueCount: 7, cellCount: 4, columnCount: 4,
+             help: "Think ahead to build both cakes.  Plan to uncover layer 1."},
+            {suitCount: 2, valueCount: 9, cellCount: 4, columnCount: 4,
+             help: "Think ahead to build both cakes.  You may drag a bottom layer to an empty pan or to below next higher layer of the opposite flavor."},
+            {suitCount: 2, valueCount: 13, cellCount: 4, columnCount: 4,
+             help: "Think ahead to build both cakes.  You may drag a bottom layer to an empty pan or to below next higher layer of the opposite flavor."}
         ];
-        private static var minValue:int = 1;
-        private static var maxValue:int = 3;
 
         internal static function suit(card:int):int
         {
@@ -40,9 +46,9 @@ package com.finegamedesign.freecelltrainer
             return card % RADIX;
         }
 
-        internal static function scale(card:int):Number
+        private static function equal(card:int, next:int):Boolean
         {
-            return 1.0 - 0.75 * (value(card) - minValue) / (maxValue - minValue);
+            return value(card) == value(next) && suit(card) == suit(next);
         }
 
         // http://help.adobe.com/en_US/ActionScript/3.0_ProgrammingAS3/WS5b3ccc516d4fbf351e63e3d118a9b90204-7ee7.html
@@ -87,6 +93,12 @@ package com.finegamedesign.freecelltrainer
         internal var roundMax:int = levels.length;  
                                     // 1;  // debug
         private var deck:Array;
+        private var cellCount:int = -1;
+        private var columnCount:int = -1;
+        private var suitCount:int = -1;
+        private var valueCount:int = -1;
+        private var valueMin:int = 1;
+        private var valueMax:int = 3;
 
         public function Model()
         {
@@ -95,10 +107,32 @@ package com.finegamedesign.freecelltrainer
 
         internal function restart():void
         {
+            clear();
             level = 1;
             round = 0;
             score = 0;
             restartScore = 0;
+        }
+
+        internal function clear():void
+        {
+            dragging = false;
+            cells = [];
+            foundations = [];
+            help = "";
+            columns = [];
+            selected = EMPTY;
+            selectedColumn = null;
+            selectedName = null;
+            targetColumnIndex = -1;
+            sweeping = false;
+            deck = null;
+            cellCount = -1;
+            columnCount = -1;
+            suitCount = -1;
+            valueCount = -1;
+            valueMin = 1;
+            valueMax = 3;
         }
 
         internal function populate(levelParams:Object):void
@@ -107,6 +141,7 @@ package com.finegamedesign.freecelltrainer
             for (var param:String in levelParams) {
                 this[param] = clone(levelParams[param]);
             }
+            generate();
             deal();
             round++;
             selected = EMPTY;
@@ -115,6 +150,45 @@ package com.finegamedesign.freecelltrainer
                 + "\n    cells " + cells
                 + "\n    foundations " + foundations
                 + "\n    columns " + columns);
+        }
+
+        private function generate():void
+        {
+            if (1 <= suitCount && 1 <= valueCount) {
+                if (null == deck) {
+                    deck = [];
+                }
+                for (var s:int = 0; s < suitCount; s++) {
+                    for (var v:int = 1; v <= valueCount; v++) {
+                        deck.push(s * RADIX + v);
+                    }
+                }
+                valueMax = valueCount;
+            }
+            if (1 <= suitCount) {
+                if (null == foundations) {
+                    foundations = [];
+                }
+                for (s = 0; s < suitCount; s++) {
+                    foundations.push([]);
+                }
+            }
+            if (1 <= cellCount) {
+                if (null == cells) {
+                    cells = [];
+                }
+                for (s = 0; s < cellCount; s++) {
+                    cells.push([]);
+                }
+            }
+            if (1 <= columnCount) {
+                if (null == columns) {
+                    columns = [];
+                }
+                for (s = 0; s < columnCount; s++) {
+                    columns.push([]);
+                }
+            }
         }
 
         private function deal():void
@@ -128,6 +202,11 @@ package com.finegamedesign.freecelltrainer
                     }
                 }
             }
+        }
+
+        internal function scale(card:int):Number
+        {
+            return 1.0 - 0.75 * (value(card) - valueMin) / (valueMax - valueMin);
         }
 
         /**
@@ -217,7 +296,7 @@ package com.finegamedesign.freecelltrainer
                 if (!dragging && !sweeping) {
                     if (1 <= cells[c].length) {
                         var card:int = cells[c][cells[c].length - 1];
-                        if (next == card) {
+                        if (equal(next, card)) {
                             hideEmpty();
                             drag(name, c, foundations[f]);
                             selectedColumn = cells[c];
@@ -297,8 +376,17 @@ package com.finegamedesign.freecelltrainer
                 }
             }
             for (c = 0; c < columns.length; c++) {
-                var above:int = columns[c][columns[c].length - 1];
-                if (compatible(card, above)) {
+                var canMoveHere:Boolean = false;
+                if (columns[c].length == 0) {
+                    canMoveHere = true;
+                }
+                else {
+                    var above:int = columns[c][columns[c].length - 1];
+                    if (compatible(card, above)) {
+                        canMoveHere = true;
+                    }
+                }
+                if (canMoveHere) {
                     canMove = true;
                     if (push) {
                         columns[c].push(EMPTY);

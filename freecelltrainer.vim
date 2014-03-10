@@ -54,14 +54,14 @@ unlet s:cpo_save
 set backspace=indent,eol,start
 set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,default,latin1
-set guifont=SimHei:h14
+set guifont=SimHei:h11:cANSI
 set helplang=En
 set keymodel=startsel,stopsel
 set selection=exclusive
 set selectmode=mouse,key
 set noswapfile
 set whichwrap=b,s,<,>,[,]
-set window=32
+set window=41
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
 silent only
@@ -73,10 +73,12 @@ set shortmess=aoO
 badd +7 \archive\flash\freecell-trainer\notes.txt
 badd +0 \archive\flash\freecell-trainer\bin\index.html
 badd +210 Main.as
-badd +8 Model.as
-badd +1 View.as
+badd +165 Model.as
+badd +56 View.as
 badd +1 WordHash.as
 badd +1 Words.as
+badd +5 RoomClip.as
+badd +80 \archive\flash\facetnated\src\com\finegamedesign\facetnated\Model.as
 args Main.as Model.as View.as WordHash.as Words.as
 edit \archive\flash\freecell-trainer\notes.txt
 set splitbelow splitright
@@ -88,8 +90,8 @@ set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 67 + 67) / 134)
-exe 'vert 2resize ' . ((&columns * 65 + 67) / 134)
+exe 'vert 1resize ' . ((&columns * 67 + 83) / 166)
+exe 'vert 2resize ' . ((&columns * 98 + 83) / 166)
 argglobal
 edit \archive\flash\freecell-trainer\notes.txt
 setlocal keymap=
@@ -193,12 +195,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 2 - ((1 * winheight(0) + 15) / 31)
+let s:l = 2 - ((1 * winheight(0) + 20) / 40)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
 2
-normal! 01l
+normal! 030l
 wincmd w
 argglobal
 edit \archive\flash\freecell-trainer\notes.txt
@@ -303,15 +305,16 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 366 - ((19 * winheight(0) + 15) / 31)
+let s:l = 299 - ((14 * winheight(0) + 20) / 40)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-366
-normal! 03l
+299
+normal! 0
 wincmd w
-exe 'vert 1resize ' . ((&columns * 67 + 67) / 134)
-exe 'vert 2resize ' . ((&columns * 65 + 67) / 134)
+2wincmd w
+exe 'vert 1resize ' . ((&columns * 67 + 83) / 166)
+exe 'vert 2resize ' . ((&columns * 98 + 83) / 166)
 tabedit \archive\flash\freecell-trainer\bin\index.html
 set splitbelow splitright
 set nosplitbelow
@@ -421,24 +424,32 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 47 - ((0 * winheight(0) + 16) / 32)
+let s:l = 76 - ((31 * winheight(0) + 20) / 41)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-47
-normal! 0
+76
+normal! 040l
+2wincmd w
 tabedit Model.as
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
 1wincmd h
+wincmd _ | wincmd |
+split
+1wincmd k
+wincmd w
 wincmd w
 set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 66 + 67) / 134)
-exe 'vert 2resize ' . ((&columns * 66 + 67) / 134)
+exe '1resize ' . ((&lines * 8 + 21) / 42)
+exe 'vert 1resize ' . ((&columns * 82 + 83) / 166)
+exe '2resize ' . ((&lines * 31 + 21) / 42)
+exe 'vert 2resize ' . ((&columns * 82 + 83) / 166)
+exe 'vert 3resize ' . ((&columns * 83 + 83) / 166)
 argglobal
 5argu
 edit Model.as
@@ -543,12 +554,12 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 15) / 31)
+let s:l = 23 - ((5 * winheight(0) + 4) / 8)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
-normal! 04l
+23
+normal! 032l
 lcd C:\archive\flash\freecell-trainer\src\com\finegamedesign\freecelltrainer
 wincmd w
 argglobal
@@ -655,23 +666,16 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 14 - ((10 * winheight(0) + 15) / 31)
+let s:l = 106 - ((14 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-14
-normal! 024l
+106
+normal! 023l
 lcd C:\archive\flash\freecell-trainer\src\com\finegamedesign\freecelltrainer
 wincmd w
-exe 'vert 1resize ' . ((&columns * 66 + 67) / 134)
-exe 'vert 2resize ' . ((&columns * 66 + 67) / 134)
-tabedit C:\archive\flash\freecell-trainer\src\com\finegamedesign\freecelltrainer\View.as
-set splitbelow splitright
-set nosplitbelow
-set nosplitright
-wincmd t
-set winheight=1 winwidth=1
 argglobal
+5argu
 edit C:\archive\flash\freecell-trainer\src\com\finegamedesign\freecelltrainer\View.as
 setlocal keymap=
 setlocal noarabic
@@ -737,14 +741,14 @@ setlocal matchpairs=(:),{:},[:]
 setlocal modeline
 setlocal modifiable
 setlocal nrformats=octal,hex
-setlocal nonumber
+setlocal number
 setlocal numberwidth=4
 setlocal omnifunc=
 setlocal path=
 setlocal nopreserveindent
 setlocal nopreviewwindow
 setlocal quoteescape=\\
-setlocal noreadonly
+setlocal readonly
 setlocal norelativenumber
 setlocal norightleft
 setlocal rightleftcmd=search
@@ -774,13 +778,20 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 42 - ((21 * winheight(0) + 16) / 32)
+let s:l = 53 - ((34 * winheight(0) + 20) / 40)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-42
-normal! 016l
+53
+normal! 010l
 lcd C:\archive\flash\freecell-trainer\src\com\finegamedesign\freecelltrainer
+wincmd w
+2wincmd w
+exe '1resize ' . ((&lines * 8 + 21) / 42)
+exe 'vert 1resize ' . ((&columns * 82 + 83) / 166)
+exe '2resize ' . ((&lines * 31 + 21) / 42)
+exe 'vert 2resize ' . ((&columns * 82 + 83) / 166)
+exe 'vert 3resize ' . ((&columns * 83 + 83) / 166)
 tabedit C:\archive\flash\freecell-trainer\src\com\finegamedesign\freecelltrainer\Main.as
 set splitbelow splitright
 set nosplitbelow
@@ -890,13 +901,14 @@ setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 81 - ((11 * winheight(0) + 16) / 32)
+let s:l = 105 - ((36 * winheight(0) + 20) / 41)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-81
-normal! 0
-tabnext 4
+105
+normal! 012l
+2wincmd w
+tabnext 1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf
 endif

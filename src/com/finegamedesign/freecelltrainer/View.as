@@ -40,6 +40,7 @@ package com.finegamedesign.freecelltrainer
 
         internal function clear():void
         {
+            model.clear();
             for each(var sweepCard:Card in sweeps) {
                 if (null != sweepCard.parent) {
                     sweepCard.parent.removeChild(sweepCard);
@@ -84,7 +85,7 @@ package com.finegamedesign.freecelltrainer
                     }
                     var suitFrame:int = Model.suit(foundations[f][c]) + 1;
                     card.suit.gotoAndStop(suitFrame);
-                    card.suit.scaleX = Model.scale(value);
+                    card.suit.scaleX = model.scale(value);
                     card.suit.visible = Model.EMPTY < value;
                 }
                 show(foundation, cardPrefix, c);
@@ -184,7 +185,7 @@ package com.finegamedesign.freecelltrainer
                 var sweepCard:Card = new Card();
                 sweepCard.txt.text = Model.value(model.selected).toString();
                 sweepCard.suit.gotoAndStop(Model.suit(model.selected) + 1);
-                sweepCard.suit.scaleX = Model.scale(model.selected);
+                sweepCard.suit.scaleX = model.scale(model.selected);
                 sweepCard.gotoAndStop("disable");
                 sweepCard.drag_btn.visible = false;
                 sweepCard.drop_btn.visible = false;
