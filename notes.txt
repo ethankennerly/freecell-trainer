@@ -1,7 +1,5 @@
 TODO
-	10 levels.
-	color and layout.
-	Score combo minus turns in between.
+	Score minus turns in between.
 	Correlate deal to difficulty.
 	Upload to finegamedesign.com/wedding-cake-builder
 	Upload to Kongregate.

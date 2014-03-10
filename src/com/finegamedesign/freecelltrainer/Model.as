@@ -23,17 +23,17 @@ package com.finegamedesign.freecelltrainer
             {suitCount: 2, valueCount: 7, cellCount: 3, columnCount: 3,
              help: "Think ahead to build both cakes.  Plan to uncover layer 1."},
             {suitCount: 2, valueCount: 8, cellCount: 4, columnCount: 4,
-             help: "Think ahead to build both cakes.  Plan to uncover layer 1."},
+             help: "To score high, stack many cakes in one move."},
             {suitCount: 2, valueCount: 9, cellCount: 4, columnCount: 4,
-             help: "Think ahead to build both cakes.  Plan to uncover layer 1."},
+             help: "To score high, do not waste moves."},
             {suitCount: 2, valueCount: 10, cellCount: 4, columnCount: 4,
-             help: "Think ahead to build both cakes.  Plan to use all columns."},
+             help: "To score high, stack many cakes in one move."},
             {suitCount: 2, valueCount: 11, cellCount: 4, columnCount: 4,
-             help: "Think ahead to build both cakes.  Plan to use all columns."},
+             help: "To score high, do not waste moves."},
             {suitCount: 2, valueCount: 12, cellCount: 4, columnCount: 4,
-             help: "Think ahead to build both cakes.  Plan to use all columns."},
+             help: "To score high, do not waste moves."},
             {suitCount: 2, valueCount: 13, cellCount: 4, columnCount: 4,
-             help: "Think ahead to build both cakes.  Plan to use all columns."}
+             help: "To score high, do not waste moves."}
         ];
 
         internal static function suit(card:int):int
@@ -282,13 +282,12 @@ package com.finegamedesign.freecelltrainer
                 sweepTop("column", next, f);
             }
             if (null == selectedColumn) {
-                sweepLength = 0;
                 points = 0;
                 return null;
             }
             else {
                 sweepLength++;
-                points = Math.pow(2, sweepLength - 1);
+                points = Math.max(1, Math.pow(2, sweepLength - 1));
                 points *= 10;
                 return {name: selectedName, 
                     from: this[selectedName + "s"].indexOf(selectedColumn), 
@@ -364,6 +363,9 @@ package com.finegamedesign.freecelltrainer
         {
             if (dragging) {
                 selectedColumn = this[name + "s"][columnIndex];
+                if ("foundation" != name) {
+                    sweepLength--;
+                }
                 dropSelected();
             }
         }
