@@ -16,19 +16,24 @@ package com.finegamedesign.freecelltrainer
              cells: [[102]], 
              columns: [[3, 103], [1, 101, 2]], 
              help: "To build two cakes, you may drag a bottom layer to below the next higher layer of the opposite flavor."},
-            {deck: [1, 2, 3, 101, 102, 103], 
-             foundations: [[], []], 
-             cells: [[]], 
-             columns: [[], []], 
-             help: "Build both cakes.  You may drag a bottom layer to an empty pan or to below next higher layer of the opposite flavor."},
-            {suitCount: 2, valueCount: 5, cellCount: 2, columnCount: 2,
+            {suitCount: 2, valueCount: 5, cellCount: 3, columnCount: 2,
              help: "Think ahead to build both cakes.  You may drag a bottom layer to an empty pan or to below next higher layer of the opposite flavor."},
-            {suitCount: 2, valueCount: 7, cellCount: 4, columnCount: 4,
+            {suitCount: 2, valueCount: 6, cellCount: 3, columnCount: 3,
+             help: "Think ahead to build both cakes.  You may drag a bottom layer to an empty pan or to below next higher layer of the opposite flavor."},
+            {suitCount: 2, valueCount: 7, cellCount: 3, columnCount: 3,
+             help: "Think ahead to build both cakes.  Plan to uncover layer 1."},
+            {suitCount: 2, valueCount: 8, cellCount: 4, columnCount: 4,
              help: "Think ahead to build both cakes.  Plan to uncover layer 1."},
             {suitCount: 2, valueCount: 9, cellCount: 4, columnCount: 4,
-             help: "Think ahead to build both cakes.  You may drag a bottom layer to an empty pan or to below next higher layer of the opposite flavor."},
+             help: "Think ahead to build both cakes.  Plan to uncover layer 1."},
+            {suitCount: 2, valueCount: 10, cellCount: 4, columnCount: 4,
+             help: "Think ahead to build both cakes.  Plan to use all columns."},
+            {suitCount: 2, valueCount: 11, cellCount: 4, columnCount: 4,
+             help: "Think ahead to build both cakes.  Plan to use all columns."},
+            {suitCount: 2, valueCount: 12, cellCount: 4, columnCount: 4,
+             help: "Think ahead to build both cakes.  Plan to use all columns."},
             {suitCount: 2, valueCount: 13, cellCount: 4, columnCount: 4,
-             help: "Think ahead to build both cakes.  You may drag a bottom layer to an empty pan or to below next higher layer of the opposite flavor."}
+             help: "Think ahead to build both cakes.  Plan to use all columns."}
         ];
 
         internal static function suit(card:int):int
@@ -82,16 +87,18 @@ package com.finegamedesign.freecelltrainer
         internal var onDeselect:Function;
         internal var onDie:Function;
         internal var onDieBonus:Function;
-        internal var selected:int = EMPTY;
-        internal var selectedColumn:Array;
-        internal var selectedName:String;
-        internal var targetColumnIndex:int = -1;
-        internal var score:int = 0;
-        internal var sweeping:Boolean = false;
+        internal var points:int = 0;
         internal var restartScore:int = 0;
         internal var round:int = 1;
         internal var roundMax:int = levels.length;  
                                     // 1;  // debug
+        internal var selected:int = EMPTY;
+        internal var selectedColumn:Array;
+        internal var selectedName:String;
+        internal var score:int = 0;
+        internal var sweeping:Boolean = false;
+        internal var sweepLength:int = 0;
+        internal var targetColumnIndex:int = -1;
         private var deck:Array;
         private var cellCount:int = -1;
         private var columnCount:int = -1;
@@ -133,6 +140,8 @@ package com.finegamedesign.freecelltrainer
             valueCount = -1;
             valueMin = 1;
             valueMax = 3;
+            sweepLength = 0;
+            points = 0;
         }
 
         internal function populate(levelParams:Object):void
@@ -214,8 +223,6 @@ package com.finegamedesign.freecelltrainer
          */
         private function scoreUp(length:int):void
         {
-            var points:int = Math.pow(2, length - 3);
-            points *= 10;
             score += points;
             if (highScore < score) {
                 highScore = score;
@@ -243,7 +250,7 @@ package com.finegamedesign.freecelltrainer
 
         internal function canMove(name:String, columnIndex:int, index:int):Boolean
         {
-            return (!sweeping && 
+            return (!sweeping && !dragging &&
                 "foundation" != name &&
                 index == this[name + "s"][columnIndex].length - 1 &&
                 from(name, columnIndex, false));
@@ -275,9 +282,14 @@ package com.finegamedesign.freecelltrainer
                 sweepTop("column", next, f);
             }
             if (null == selectedColumn) {
+                sweepLength = 0;
+                points = 0;
                 return null;
             }
             else {
+                sweepLength++;
+                points = Math.pow(2, sweepLength - 1);
+                points *= 10;
                 return {name: selectedName, 
                     from: this[selectedName + "s"].indexOf(selectedColumn), 
                     to: targetColumnIndex};
@@ -286,6 +298,7 @@ package com.finegamedesign.freecelltrainer
 
         internal function sweepEnd():void
         {
+            scoreUp(sweepLength);
             drop("foundation", targetColumnIndex);
         }
 
@@ -367,11 +380,13 @@ package com.finegamedesign.freecelltrainer
             if (EMPTY == card) {
                 return canMove;
             }
-            for (var c:int = 0; c < cells.length; c++) {
-                if (cells[c].length == 0) {
-                    canMove = true;
-                    if (push) {
-                        cells[c].push(EMPTY);
+            if ("cell" != name) {
+                for (var c:int = 0; c < cells.length; c++) {
+                    if (cells[c].length == 0) {
+                        canMove = true;
+                        if (push) {
+                            cells[c].push(EMPTY);
+                        }
                     }
                 }
             }

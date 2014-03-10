@@ -15,7 +15,7 @@ package com.finegamedesign.freecelltrainer
         internal var model:Model;
         internal var room:DisplayObjectContainer;
         private var cursor:Card;
-        private var sweeps:Array = [];
+        private var brooms:Array = [];
         private var ui:Main;
 
         public function View()
@@ -41,12 +41,12 @@ package com.finegamedesign.freecelltrainer
         internal function clear():void
         {
             model.clear();
-            for each(var sweepCard:Card in sweeps) {
-                if (null != sweepCard.parent) {
-                    sweepCard.parent.removeChild(sweepCard);
+            for each(var broom:DisplayObject in brooms) {
+                if (null != broom.parent) {
+                    broom.parent.removeChild(broom);
                 }
             }
-            sweeps = [];
+            brooms = [];
         }
 
         /**
@@ -75,6 +75,7 @@ package com.finegamedesign.freecelltrainer
                     var card:Card = foundation[cardPrefix + "_" + c];
                     var value:int = Model.value(foundations[f][c]);
                     card.txt.text = Model.EMPTY == value ? "" : value.toString();
+                    card.txt.mouseEnabled = false;
                     card.drag_btn.visible = model.canMove(prefix, f, c);
                     populateDragButton(card.drag_btn);
                     card.drop_btn.visible = Model.EMPTY == value;
@@ -191,11 +192,15 @@ package com.finegamedesign.freecelltrainer
                 sweepCard.drop_btn.visible = false;
                 sweepCard.mouseChildren = false;
                 sweepCard.mouseEnabled = false;
-                sweeps.push(sweepCard);
-                sweepCard.x = from.x;
-                sweepCard.y = from.y;
-                room.addChild(sweepCard);
-                TweenLite.to(sweepCard, 0.5, {x: target.x, y: target.y, 
+                var broom:Broom = new Broom();
+                broom.addChild(sweepCard);
+                broom.txt.text = "+" + model.points.toString();
+                broom.mouseEnabled = false;
+                brooms.push(broom);
+                broom.x = from.x;
+                broom.y = from.y;
+                room.addChild(broom);
+                TweenLite.to(broom, 0.5, {x: target.x, y: target.y, 
                     ease:Linear.easeNone, onComplete: model.sweepEnd});
             }
         }
