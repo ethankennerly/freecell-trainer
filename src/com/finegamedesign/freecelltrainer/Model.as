@@ -365,6 +365,7 @@ package com.finegamedesign.freecelltrainer
                 selectedColumn = this[name + "s"][columnIndex];
                 if ("foundation" != name) {
                     sweepLength--;
+                    sweepLength = Math.min(0, sweepLength);
                 }
                 dropSelected();
             }
